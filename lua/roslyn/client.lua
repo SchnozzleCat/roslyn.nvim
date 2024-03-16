@@ -88,28 +88,13 @@ function M.spawn(cmd, target, settings, on_exit, on_attach, capabilities)
 
 	local spawned = RoslynClient.new(target)
 
+	print(settings)
+
 	---@diagnostic disable-next-line: missing-fields
 	spawned.id = vim.lsp.start_client({
 		name = "roslyn",
 		capabilities = capabilities,
-		settings = {
-			RoslynExtensionsOptions = {
-				InlayHintsOptions = {
-					EnableForParameters = true,
-					ForLiteralParameters = true,
-					ForIndexerParameters = true,
-					ForObjectCreationParameters = true,
-					ForOtherParameters = true,
-					SuppressForParametersThatDifferOnlyBySuffix = false,
-					SuppressForParametersThatMatchMethodIntent = false,
-					SuppressForParametersThatMatchArgumentName = false,
-					EnableForTypes = true,
-					ForImplicitVariableTypes = true,
-					ForLambdaParameterTypes = true,
-					ForImplicitObjectCreation = true,
-				},
-			},
-		},
+		settings = settings,
 		-- cmd = hacks.wrap_server_cmd(vim.lsp.rpc.connect("127.0.0.1", 8080)),
 		cmd = hacks.wrap_server_cmd(roslyn_lsp_rpc.start_uds(cmd, server_args)),
 		root_dir = vim.fn.getcwd(), ---@diagnostic disable-line: assign-type-mismatch
