@@ -88,7 +88,7 @@ function M.spawn(cmd, target, settings, on_exit, on_attach, capabilities)
 
 	local spawned = RoslynClient.new(target)
 
-	print(settings)
+	print(vim.inspect(settings))
 
 	---@diagnostic disable-next-line: missing-fields
 	spawned.id = vim.lsp.start_client({
